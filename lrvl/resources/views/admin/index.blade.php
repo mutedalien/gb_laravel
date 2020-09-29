@@ -1,13 +1,19 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
-@section('title')
-    @parent Админка
-@endsection
+@section('title', 'Админка')
 
 @section('menu')
-    @include('menu.admin')
+    @include('admin.menu')
 @endsection
 
 @section('content')
-    <h1>Админпанель сайта</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <h2>Админка главная</h2>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

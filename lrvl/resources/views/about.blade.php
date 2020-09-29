@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Главная')
+@section('title', 'О нас')
 
 @section('menu')
     @include('menu')
@@ -10,12 +10,12 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <h2>Главная страница</h2>
+                <div class="card-body">
+                    <h2>О нас</h2>
+                </div>
             </div>
         </div>
     </div>
 @endsection
-
-
 
 

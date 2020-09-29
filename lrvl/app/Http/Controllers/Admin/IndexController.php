@@ -2,33 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Category;
 use App\Http\Controllers\Controller;
+use App\News;
+use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
-    {
-
+    public function index() {
         return view('admin.index');
-
     }
 
-    public function aut()
-    {
-        return view('admin.aut');
+    public function addNews() {
+        return view('admin.addNews');
     }
 
-    public function cat()
-    {
-        return view('admin.cat');
-
+    public function test1() {
+        return view('admin.test1');
     }
 
-    public function news()
-    {
-        return view('admin.news');
-
+    public function test2() {
+        return view('admin.test2');
     }
-
 }
