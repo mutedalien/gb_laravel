@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
-@section('title', 'Админка')
+@section('title', 'О нас')
 
 @section('menu')
-    @include('admin.menu')
+    @include('menu')
 @endsection
 
 @section('content')
@@ -12,14 +12,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h2>Админка главная</h2>
+                        <h2>О нас</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
-
-
 
 

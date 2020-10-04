@@ -1,20 +1,35 @@
 @extends('layouts.main')
 
 @section('title')
-    @parent Рубрики
+    @parent Категории
 @endsection
 
-@section('menu')
-    @include('menu.main')
+@section ('menu')
+    @include('menu')
 @endsection
 
 @section('content')
-    <h2>Рубрики</h2>
-    @forelse($categories as $item)
-        <div>
-            <h2><a href="{{ route('news.categoryId', $item['name']) }}">{{ $item['category'] }}</a></h2>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        @if ($news)
+                            <h1>Новости категории {{ $category }}</h1>
+                            @forelse($news as $item)
+                                <h2>{{ $item['title'] }}</h2>
+                                @if (!$item['isPrivate'])
+                                    <a href="{{ route('news.show', $item['id']) }}">Подробнее..</a>
+                                @endif
+                            @empty
+                                Нет новостей
+                            @endforelse
+                        @else
+                            Нет такой категории
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
-    @empty
-        <p>Не найдено</p>
-    @endforelse
+    </div>
 @endsection
