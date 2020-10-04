@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    @parent Админка
+    @parent Личный кабинет
 @endsection
 
 @section('menu')
@@ -9,5 +9,5 @@
 @endsection
 
 @section('content')
-    <h1>Админпанель сайта</h1>
+    <h2>Личный кабинет</h2>
 @endsection
