@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    @parent Админка
+    @parent Редактор новостей
 @endsection
 
 @section('menu')
@@ -9,5 +9,5 @@
 @endsection
 
 @section('content')
-    <h1>Админпанель сайта</h1>
+    <h2>Редактор новостей</h2>
 @endsection
