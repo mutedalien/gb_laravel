@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\News;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class IndexController extends Controller
 {
@@ -13,15 +14,17 @@ class IndexController extends Controller
         return view('admin.index');
     }
 
-    public function addNews() {
-        return view('admin.addNews');
-    }
-
-    public function test1() {
-        return view('admin.test1');
-    }
 
     public function test2() {
-        return view('admin.test2');
+
+//        $export = new InovicesExport(News::getNews());
+//        return Excel::downLoad($export, 'news.xls');
+
+        return response()->json(News::getNews())
+            ->header('Content-Disposition', 'attachment; filename = "json.txt"')
+            ->setEncodingOptions(JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
+        //return response()->download('10.jpg');
+        //return view('admin.test2');
     }
 }

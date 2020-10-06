@@ -1,9 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('title', 'Авторизация')
+@section('title')
+    @parent Логин
+@endsection
 
-@section('menu')
-    @include('admin.menu')
+@section ('menu')
+    @include('menu')
 @endsection
 
 @section('content')

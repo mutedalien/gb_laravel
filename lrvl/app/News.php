@@ -2,9 +2,12 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\NewsController;
+
 class News
 {
-    private static $news = [
+    public static $news = [
         '1' => [
             'id' => 1,
             'title' => 'Новость 1',
@@ -38,7 +41,7 @@ class News
     public static function getNewsByCategorySlug($slug) {
         $id = Category::getCategoryIdBySlug($slug);
         $news = [];
-        foreach (static::$news as $item) {
+        foreach (News::getNews() as $item) {
             if ($item['category_id'] == $id) {
                 $news[] = $item;
             }
@@ -48,13 +51,14 @@ class News
 
     public static function getNews()
     {
-        return static::$news;
+        //return static::$news;
+        return json_decode(Storage::disk('local')->get('news.json'), true);
     }
 
     public static function getNewsId($id)
     {
-        if (array_key_exists($id, static::$news))
-            return static::$news[$id];
+        if (array_key_exists($id, News::getNews()))
+            return News::getNews()[$id];
         else
             return [];
     }

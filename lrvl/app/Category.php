@@ -3,9 +3,11 @@
 namespace App;
 
 
+use Illuminate\Support\Facades\Storage;
+use App\News;
 class Category
 {
-    private static $categories = [
+    public static $categories = [
         1 => [
             'id' => 1,
             'title' => 'Спорт',
@@ -39,12 +41,13 @@ class Category
 
     public static function getCategories()
     {
-        return static::$categories;
+        // return static::$categories;
+        return json_decode(Storage::disk('local')->get('category.json'), true);
     }
 
     public static function getCategoryById($id) {
-        if (array_key_exists($id, static::$categories))
-            return static::$categories[$id];
+        if (array_key_exists($id, Category::getCategories()))
+            return Category::getCategories()[$id];
         else
             return [];
     }
