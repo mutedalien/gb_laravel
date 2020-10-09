@@ -10,14 +10,19 @@ class CategoryController extends Controller
 {
     public function index() {
         return view('news.categories', [
-            'categories' => Category::getCategories()
+            'categories' => Category::all()
         ]);
     }
 
     public function show($slug) {
+        $category = Category::query()->where('slug', $slug)->first();
+        $news = News::query()->where('category_id', $category->id)->get();
+
+       // $category->news->get();
+
         return view('news.category', [
-            'news' => News::getNewsByCategorySlug($slug),
-            'category' => Category::getCategoryNameBySlug($slug)
+            'news' => $news,
+            'category' => $category
         ]);
     }
 }

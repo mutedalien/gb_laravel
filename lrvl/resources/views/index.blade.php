@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Главная')
 
@@ -10,7 +10,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <h2>Главная страница</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Главная</h2>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
