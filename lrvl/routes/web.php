@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+
 Route::view('/about', 'about')->name('about');
 Route::view('/vue', 'vue')->name('vue');
 
@@ -19,17 +20,22 @@ Route::group([
     'prefix' => 'admin',
     'namespace' => 'Admin',
     'as' => 'admin.'
-], function () {
-    Route::get('/', 'IndexController@index')->name('index');
-    Route::get('/addNews', 'IndexController@addNews')->name('addNews');
-    Route::get('/test1', 'IndexController@test1')->name('test1');
-    Route::get('/test2', 'IndexController@test2')->name('test2');
+], function() {
+    Route::get('/', 'NewsController@index')->name('index');
+    Route::match(['get','post'],'/create', 'NewsController@create')->name('create');
+    Route::get('/edit/{news}', 'NewsController@edit')->name('edit');
+    Route::post('/update/{news}', 'NewsController@update')->name('update');
+    Route::get('/destroy/{news}', 'NewsController@destroy')->name('destroy');
+
+   // Route::resource('news', 'NewsController');
+
+    Route::get('/test3', 'IndexController@test2')->name('test2');
 });
 
 Route::group([
     'prefix' => 'news',
     'as' => 'news.'
-], function () {
+], function() {
     Route::group([
         'as' => 'category.'
     ], function () {
@@ -38,10 +44,13 @@ Route::group([
     });
 
     Route::get('/', 'NewsController@index')->name('index');
-    Route::get('/one/{id}', 'NewsController@show')->name('show');
+    Route::get('/one/{news}', 'NewsController@show')->name('show');
 });
+
+
+
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+

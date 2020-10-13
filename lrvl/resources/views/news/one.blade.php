@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('title', 'Новость')
 
@@ -9,13 +9,14 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ $news['title'] }}</div>
                     <div class="card-body">
+                        <div class="card-img" style="background-image: url({{$news->image ?? asset('storage/default.jpeg')}})"></div>
                         @if ($news)
-                            @if (!$news['isPrivate'])
-                                <p>{{ $news['text'] }}</p>
+                            @if (!$news->isPrivate)
+                                <h2>{{ $news->title }}</h2>
+                                <p>{{ $news->text }}</p>
                             @else
                                 Зарегистрируйтесь для просмотра
                             @endif
