@@ -11,37 +11,46 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::view('/about', 'about')->name('about');
-Route::view('/vue', 'vue')->name('vue');
+Route::get('/', 'HomeController@home')->name('home');
+Route::get('/home', 'HomeController@home')->name('home');
+
+Route::match(['post','get'], '/profile', 'ProfileController@update')->name('updateProfile');
+
+Route::get('/auth/vk', 'LoginController@loginVK')->name('vklogin');
+Route::get('/auth/vk/response', 'LoginController@responseVK')->name('vkResponse');
+
 
 Route::group([
     'prefix' => 'admin',
     'namespace' => 'Admin',
-    'as' => 'admin.'
+    'as' => 'admin.',
+    'middleware' => ['auth', 'is_admin']
 ], function () {
-    Route::get('/', 'IndexController@index')->name('index');
-    Route::get('/addNews', 'IndexController@addNews')->name('addNews');
-    Route::get('/test1', 'IndexController@test1')->name('test1');
-    Route::get('/test2', 'IndexController@test2')->name('test2');
+    Route::get('/parser', 'ParserController@index')->name('parser');
+    Route::get('/parserNews', 'ParserController@getParsedNews')->name('parserNews');
+
+    Route::get('/users', 'UserController@index')->name('users');
+    Route::get('/deleteUser{user}', 'UserController@delete')->name('deleteUser');
+    Route::get('/users/toggleAdmin/{user}', 'UserController@toggleAdmin')->name('toggleAdmin');
+
+    Route::resource('/news', 'NewsController')->except('show');
+
+
+    Route::get('/test1', 'AdminController@test1')->name('test1');
+    Route::get('/test2', 'AdminController@test2')->name('test2');
 });
 
-Route::group([
-    'prefix' => 'news',
-    'as' => 'news.'
-], function () {
-    Route::group([
-        'as' => 'category.'
+Route::group(
+    [
+        'prefix' => 'news',
+        'as' => 'news.'
     ], function () {
-        Route::get('/categories', 'CategoryController@index')->name('index');
-        Route::get('/category/{slug}', 'CategoryController@show')->name('show');
-    });
-
-    Route::get('/', 'NewsController@index')->name('index');
-    Route::get('/one/{id}', 'NewsController@show')->name('show');
-});
+    Route::get('/all', 'NewsController@news')->name('all');
+    Route::get('/one/{news}', 'NewsController@newsOne')->name('one');
+    Route::get('/categories', 'NewsController@categories')->name('categories');
+    Route::get('/category/{category}', 'NewsController@categoryId')->name('categoryId');
+}
+);
 
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

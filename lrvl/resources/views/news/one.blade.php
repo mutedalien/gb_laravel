@@ -1,34 +1,29 @@
 @extends('layouts.app')
 
-@section('title', 'Новость')
+@section('title')
+    @parent {{ $news->heading }}
+@endsection
 
 @section('menu')
-    @include('menu')
+    @include('menus.main')
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ $news['title'] }}</div>
-                    <div class="card-body">
-                        @if ($news)
-                            @if (!$news['isPrivate'])
-                                <p>{{ $news['text'] }}</p>
-                            @else
-                                Зарегистрируйтесь для просмотра
-                            @endif
-                        @else
-                            Нет новости с таким id
-                        @endif
+    @if (!$news->isPrivate)
+        <section class="news-body">
+            <div class="jumbotron">
+                <div class="container" style="min-height: 80vh; margin-bottom: -3vh; margin-top: 3vh; padding-top: 50px;">
+                    <h1>{{ $news->heading }}</h1>
+                    <div>
+                        <img src="{{ $news->newsImg == '' ? asset('http://placehold.it/1000x300') : $news->newsImg}}" alt="news_img" style="padding-top: 40px; width: 100%">
                     </div>
+                    <p style="width:100%; padding-top: 40px">
+                        <hr> {!! $news->description !!} <hr>
+                    </p>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    @else
+        <br><br><br><h3>Private territory</h3>
+    @endif
 @endsection
-
-
-
-
