@@ -2,51 +2,31 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 
-class Category
+/**
+ * Class Category
+ * @package App
+ * @property string category
+ * @property string name
+ */
+class Category extends Model
 {
-    private static $categories = [
-        1 => [
-            'id' => 1,
-            'title' => 'Спорт',
-            'slug' => 'sport'
-        ],
-        2 => [
-            'id' => 2,
-            'title' => 'Политика',
-            'slug' => 'politics'
-        ],
-    ];
-
-    public static function getCategoryNameBySlug($slug) {
-        $id = Category::getCategoryIdBySlug($slug);
-        $category = Category::getCategoryById($id);
-        if ($category != [])
-            return $category['title'];
-        else return [];
+    public $timestamps = false;
+    protected $fillable = ['category', 'name'];
+    public function news() {
+        return $this->hasMany(News::class, 'category_id')->get();
     }
-
-    public static function getCategoryIdBySlug($slug) {
-        $id = null;
-        foreach (static::$categories as $category) {
-            if ($category['slug'] == $slug) {
-                $id = $category['id'];
-                break;
-            }
-        }
-        return $id;
-    }
-
-    public static function getCategories()
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
     {
-        return static::$categories;
+        return 'name';
     }
-
-    public static function getCategoryById($id) {
-        if (array_key_exists($id, static::$categories))
-            return static::$categories[$id];
-        else
-            return [];
-    }
-
 }
+
+
+

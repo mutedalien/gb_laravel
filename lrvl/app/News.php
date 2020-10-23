@@ -2,63 +2,38 @@
 
 namespace App;
 
-class News
+use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\DomCrawler\Crawler;
+
+class News extends Model
 {
-    private static $news = [
-        '1' => [
-            'id' => 1,
-            'title' => 'Новость 1',
-            'text' => 'А у нас новость 1 и она очень хорошая!',
-            'isPrivate' => false,
-            'category_id' => 1
-        ],
-        '2' => [
-            'id' => 2,
-            'title' => 'Новость 2',
-            'text' => 'А у нас новость 2 и она очень очень хорошая!',
-            'isPrivate' => false,
-            'category_id' => 1
-        ],
-        '3' => [
-            'id' => 3,
-            'title' => 'Новость 3',
-            'text' => 'А тут плохие новости(((',
-            'isPrivate' => false,
-            'category_id' => 2
-        ],
-        '4' => [
-            'id' => 4,
-            'title' => 'Новость 4',
-            'text' => 'А тут плохие плохие новости(((',
-            'isPrivate' => false,
-            'category_id' => 2
-        ],
-    ];
+    public $timestamps = false;
 
-    public static function getNewsByCategorySlug($slug) {
-        $id = Category::getCategoryIdBySlug($slug);
-        $news = [];
-        foreach (static::$news as $item) {
-            if ($item['category_id'] == $id) {
-                $news[] = $item;
-            }
-        }
-        return $news;
-    }
+    protected $fillable = ['heading', 'description', 'category_id', 'isPrivate'];
 
-    public static function getNews()
+    public function category()
     {
-        return static::$news;
+        return $this->belongsTo(Category::class, 'category_id')->first();
     }
 
-    public static function getNewsId($id)
+    public static function rules()
     {
-        if (array_key_exists($id, static::$news))
-            return static::$news[$id];
-        else
-            return [];
+        $newsCategory = (new Category())->getTable();
+        return [
+            'heading' => 'required|min:5|max:100',
+            'description' => 'required|max:5000',
+            'category_id' => "required|exists:{$newsCategory},id",
+            'newsImg' => 'mimes:jpeg,bmp,png,gif|max:1000',
+        ];
     }
 
-
-
+    public static function attributeNames()
+    {
+        return [
+            'heading' => 'Heading of news',
+            'description' => 'Text of news',
+            'category_id' => "News category",
+            'newsImg' => "Image of news"
+        ];
+    }
 }
